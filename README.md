@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
+npx create-next-app
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+npm install prisam --save-dev
+npx prisma init
+
+touch .env
+```ts
+DATABASE_URL="db_url"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+add to .gitignore
+```
+# local env files
+.env*.local
+.env
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+npx prisma db pull
+npx prisma generate
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+cd src
+mkdir lib
+cd lib
+touch prisma.ts
+```ts
+import { PrismaClient } from '@prisma/client'
 
-## Learn More
+const prismaClientSingleton = () => {
+  return new PrismaClient()
+}
 
-To learn more about Next.js, take a look at the following resources:
+type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClientSingleton | undefined
+}
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
 
-## Deploy on Vercel
+export default prisma
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+add to tsconfig.json
+```json
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+          "@/*": ["./src/*"],
+          "db": ["./lib/prisma"]
+        }
+    }
+}
+```
