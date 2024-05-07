@@ -1,4 +1,4 @@
-import ItemCard from "../components/ItemCard"
+import ItemCard from "@/components/ItemCard"
 import prisma from "@/lib/prisma"
 
 export default async function Items(){

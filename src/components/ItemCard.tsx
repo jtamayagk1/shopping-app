@@ -1,9 +1,12 @@
 import Image from "next/image"
 import Link from "next/link"
+import { BsFillPencilFill, BsFillPatchCheckFill, BsXCircleFill } from "react-icons/bs";
+
 
 export default function ItemCard(props: any){
   return(
-    <div className="m-2 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+    <div className="m-2 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700
+      transition ease-in-out delay-50 hover:-translate-y-0.5 hover:scale-105 hover:bg-gray-700 duration-300 "
       style={{width:'16rem', height:'24rem'}}>
         <Link href={`/items/${props.item.id}`} >
           <Image

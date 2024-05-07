@@ -14,4 +14,5 @@ model item {
   category    String?
   price       Decimal? @db.Decimal
   quantity    Int?
+  user        String
 }
