@@ -13,6 +13,12 @@ const nextConfig = {
         hostname:'avatars.githubusercontent.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol:'https',
+        hostname:'shopping-app-nextjs-project-jt.s3.amazonaws.com',
+        port: '',
+        pathname: '/items-images/**',
       }
     ]
   }

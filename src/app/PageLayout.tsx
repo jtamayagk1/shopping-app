@@ -1,7 +1,7 @@
 "use client";
 
 import React, { PropsWithChildren } from "react";
-import { PageLoader } from "../components/PageLoader";
+import Loader from "@/components/Loader";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import Navbar from "../components/Navbar";
 
@@ -10,7 +10,7 @@ export const PageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 
   if (isLoading) {
     return (
-      <PageLoader />
+      <Loader />
     );
   }
 

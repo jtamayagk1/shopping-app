@@ -14,6 +14,11 @@ export default function Navbar() {
             Home
           </Link>
         </li>
+        <li className='navItem'>
+          <Link href="/items">
+            Shop
+          </Link>
+        </li>
         {user && (
           <li className='navItem'>
             <Link href="/cart">

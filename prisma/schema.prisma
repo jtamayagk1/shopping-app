@@ -14,5 +14,16 @@ model item {
   category    String?
   price       Decimal? @db.Decimal
   quantity    Int?
-  user        String
+  user_id     String
+  cart        cart[]
+}
+
+model cart {
+  item_id    Int
+  added_time DateTime @db.Date
+  user_id    String
+  cart_id    Int      @id @default(autoincrement())
+  item       item     @relation(fields: [item_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "item_id_fk")
+
+  @@index([item_id], map: "fki_item_id_fk")
 }
